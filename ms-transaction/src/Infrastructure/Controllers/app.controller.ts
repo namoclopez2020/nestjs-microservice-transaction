@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { TransactionStatus } from 'src/Domain/Constants/transaction-status.constant';
 import { Transaction } from 'src/Domain/Entities/transaction.entity';
 import { ITransactionRepository } from 'src/Domain/Interfaces/transaction.repository.interface';
