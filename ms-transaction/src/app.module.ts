@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AppController } from './Infrastructure/Controllers/app.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import repositories from './Infrastructure/Repositories';
+import { Transaction } from './Infrastructure/Repositories/Entities/transaction.entity';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -21,8 +21,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       inject: [ConfigService],
       imports: [ConfigModule]
     }),
+    TypeOrmModule.forFeature([Transaction])
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [...repositories],
 })
 export class AppModule {}
