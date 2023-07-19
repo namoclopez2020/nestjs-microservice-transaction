@@ -16,16 +16,16 @@ async function bootstrap() {
     transport: Transport.KAFKA,
     options: {
       consumer: {
-        groupId: 'kakfa-consumer',
+        groupId: 'ms-transaction-consumer',
       },
       client: {
         brokers: [configService.get('KAFKA_BROKERS')],
-        ssl: true,
-        sasl: {
-          mechanism: 'plain',
-          username: configService.get('KAFKA_USERNAME'),
-          password: configService.get('KAFKA_PASSWORD'),
-        },
+        // ssl: true,
+        // sasl: {
+        //   mechanism: 'plain',
+        //   username: configService.get('KAFKA_USERNAME'),
+        //   password: configService.get('KAFKA_PASSWORD'),
+        // },
       },
     }
   } as MicroserviceOptions)
