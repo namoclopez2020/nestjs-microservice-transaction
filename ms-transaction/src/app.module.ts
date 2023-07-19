@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './Infrastructure/Controllers/app.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import repositories from './Infrastructure/Repositories';
+import Repositories from './Infrastructure/Repositories';
 import { Transaction } from './Infrastructure/Repositories/Entities/transaction.entity';
 @Module({
   imports: [
@@ -10,13 +10,13 @@ import { Transaction } from './Infrastructure/Repositories/Entities/transaction.
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: 'localhost',
+        host: configService.get('DATABASE_HOST'),
         port: configService.get<number>('DATABASE_PORT'),
         username: configService.get('DATABASE_USERNAME'),
         password: configService.get('DATABASE_PASSWORD'),
         database: configService.get('DATABASE_NAME'),
-        entities: [],
-        synchronize: true,
+        entities: [Transaction],
+        synchronize: true, // disable on production
       }),
       inject: [ConfigService],
       imports: [ConfigModule]
@@ -24,6 +24,6 @@ import { Transaction } from './Infrastructure/Repositories/Entities/transaction.
     TypeOrmModule.forFeature([Transaction])
   ],
   controllers: [AppController],
-  providers: [...repositories],
+  providers: [...Repositories],
 })
 export class AppModule {}
