@@ -1,41 +1,60 @@
 import { UUID } from 'crypto';
+import { TransactionStatus } from '../Constants/transaction-status.constant';
+
+export type TransactionProperties = {
+    readonly transactionExternalId: UUID,
+    readonly accountExternalIdDebit: UUID,
+    readonly accountExternalIdCredit: UUID,
+    readonly transferTypeId: number,
+    readonly value: number,
+    readonly status: TransactionStatus,
+    readonly createdAt: Date,
+    readonly updatedAt: Date,
+};
 
 export class Transaction {
-  constructor(
-    private readonly transactionExternalId: UUID,
-    private readonly accountExternalIdDebit: UUID,
-    private readonly accountExternalIdCredit: UUID,
-    private readonly transferTypeId: number,
-    private readonly value: number,
-    private readonly createdAt: Date,
-    private readonly updatedAt: Date,
-  ) {}
+    private readonly transactionExternalId: UUID
+    private readonly accountExternalIdDebit: UUID
+    private readonly accountExternalIdCredit: UUID
+    private readonly transferTypeId: number
+    private readonly value: number
+    private readonly status: TransactionStatus
+    private readonly createdAt: Date
+    private readonly updatedAt: Date
 
-  getTransactionExternalId(): UUID {
-    return this.transactionExternalId;
-  }
+    constructor(properties: TransactionProperties) {
+        Object.assign(this, properties);
+    }
 
-  getAccountExternalIdDebit(): UUID {
-    return this.accountExternalIdDebit;
-  }
+    getTransactionExternalId(): UUID {
+        return this.transactionExternalId;
+    }
 
-  getAccountExternalIdCredit(): UUID {
-    return this.accountExternalIdCredit;
-  }
+    getStatus(): TransactionStatus {
+        return this.status;
+    }
 
-  getTransferTypeId(): number {
-    return this.transferTypeId;
-  }
+    getAccountExternalIdDebit(): UUID {
+        return this.accountExternalIdDebit;
+    }
 
-  getValue(): number {
-    return this.value;
-  }
+    getAccountExternalIdCredit(): UUID {
+        return this.accountExternalIdCredit;
+    }
 
-  getCreatedAt(): Date {
-    return this.createdAt;
-  }
+    getTransferTypeId(): number {
+        return this.transferTypeId;
+    }
 
-  getUpdatedAt(): Date {
-    return this.updatedAt;
-  }
+    getValue(): number {
+        return this.value;
+    }
+
+    getCreatedAt(): Date {
+        return this.createdAt;
+    }
+
+    getUpdatedAt(): Date {
+        return this.updatedAt;
+    }
 }

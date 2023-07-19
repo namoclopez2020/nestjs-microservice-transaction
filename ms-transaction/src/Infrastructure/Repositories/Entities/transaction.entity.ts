@@ -1,9 +1,10 @@
 import { UUID } from 'crypto';
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Generated, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class Transaction {
   @PrimaryGeneratedColumn()
+  @Generated('uuid')
   transactionExternalId: UUID;
 
   @Column()
