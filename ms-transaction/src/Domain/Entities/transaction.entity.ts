@@ -5,7 +5,7 @@ export type TransactionProperties = {
     readonly transactionExternalId: UUID,
     readonly accountExternalIdDebit: UUID,
     readonly accountExternalIdCredit: UUID,
-    readonly transferTypeId: number,
+    readonly tranferTypeId: number,
     readonly value: number,
     readonly status: TransactionStatus,
     readonly createdAt: Date,
@@ -16,7 +16,7 @@ export class Transaction {
     private readonly transactionExternalId: UUID
     private readonly accountExternalIdDebit: UUID
     private readonly accountExternalIdCredit: UUID
-    private readonly transferTypeId: number
+    private readonly tranferTypeId: number
     private readonly value: number
     private readonly status: TransactionStatus
     private readonly createdAt: Date
@@ -42,8 +42,8 @@ export class Transaction {
         return this.accountExternalIdCredit;
     }
 
-    getTransferTypeId(): number {
-        return this.transferTypeId;
+    gettranferTypeId(): number {
+        return this.tranferTypeId;
     }
 
     getValue(): number {

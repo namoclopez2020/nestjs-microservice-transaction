@@ -15,7 +15,7 @@ export class Transaction {
   accountExternalIdCredit: UUID;
 
   @Column('int')
-  transferTypeId: number;
+  tranferTypeId: number;
 
   @Column({
     type: 'varchar',

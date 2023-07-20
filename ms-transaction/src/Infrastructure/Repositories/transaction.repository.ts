@@ -19,7 +19,7 @@ export class TransactionRepository implements ITransactionRepository {
             transactionExternalId: transaction.getTransactionExternalId(),
             accountExternalIdDebit: transaction.getAccountExternalIdDebit(),
             accountExternalIdCredit: transaction.getAccountExternalIdCredit(),
-            transferTypeId: transaction.getTransferTypeId(),
+            tranferTypeId: transaction.gettranferTypeId(),
             value: transaction.getValue(),
             status: transaction.getStatus(),
             createdAt: transaction.getCreatedAt(),

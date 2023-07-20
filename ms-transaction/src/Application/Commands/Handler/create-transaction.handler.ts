@@ -1,18 +1,26 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateTransactionCommand } from '../Impl/create-transaction.command';
-import { Inject } from '@nestjs/common';
-import { ITransactionRepository } from '../../../Domain/Interfaces/transaction.repository.interface';
+import CreateTransactionService from '../../../Domain/Services/create-transaction.service';
+import { v4 as uuidv4 } from 'uuid';
+import { CreateTransactionDto } from '../../../Application/Dto/create-transaction.dto';
 
 @CommandHandler(CreateTransactionCommand)
 export class CreateTransactionCommandHandler implements ICommandHandler<CreateTransactionCommand> {
     constructor(
-        @Inject('ITransactionRepository')
-        private transactionRepository: ITransactionRepository,
+        private CreateTransactionService: CreateTransactionService
     ) {}
 
     async execute(
         command: CreateTransactionCommand,
     ): Promise<void> {
-        return
+        const transaction: CreateTransactionDto = {
+            transactionExternalId: uuidv4(),
+            accountExternalIdDebit: command.accountExternalIdDebit,
+            accountExternalIdCredit: command.accountExternalIdCredit,
+            tranferTypeId: command.tranferTypeId,
+            value: command.value,
+        }
+
+        await this.CreateTransactionService.execute(transaction)
     }
 }
