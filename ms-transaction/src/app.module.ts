@@ -36,11 +36,13 @@ export const DomainServices = [CreateTransactionService]
         useFactory: async (configService: ConfigService) => ({
           transport: Transport.KAFKA,
           options: {
-            consumer: {
-              groupId: 'ms-transaction-consumer',
-            },
+            // consumer: {
+            //   groupId: 'ms-transaction-consumer',
+            // },
             client: {
               brokers: [configService.get('KAFKA_BROKERS')],
+              groupId: 'ms-transaction-consumer-server',
+              
               // ssl: true,
               // sasl: {
               //   mechanism: 'plain',

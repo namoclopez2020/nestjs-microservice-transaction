@@ -20,6 +20,7 @@ async function bootstrap() {
       },
       client: {
         brokers: [configService.get('KAFKA_BROKERS')],
+        // groupId: 'ms-transaction-consumer',
         // ssl: true,
         // sasl: {
         //   mechanism: 'plain',
@@ -49,6 +50,6 @@ async function bootstrap() {
     }
   })
 
-  await app.listen(3000);
+  await app.listen(configService.get<number>('APP_PORT'));
 }
 bootstrap();
