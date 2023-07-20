@@ -14,7 +14,7 @@ export class CreateTransactionCommandHandler implements ICommandHandler<CreateTr
         command: CreateTransactionCommand,
     ): Promise<void> {
         const transaction: CreateTransactionDto = {
-            transactionExternalId: uuidv4(),
+            transactionExternalId: command.transactionExternalId,
             accountExternalIdDebit: command.accountExternalIdDebit,
             accountExternalIdCredit: command.accountExternalIdCredit,
             tranferTypeId: command.tranferTypeId,

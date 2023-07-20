@@ -3,6 +3,7 @@ import { Inject } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateTransactionCommand } from '../../Application/Commands/Impl/create-transaction.command';
 import { CreateTransactionDto } from '../../Application/Dto/Http/create-transaction.dto';
+import { v4 as uuidv4 } from 'uuid';
 
 @Controller()
 export class AppController {
@@ -12,14 +13,16 @@ export class AppController {
   async createTransaction(
     @Body() body: CreateTransactionDto
   ): Promise<number> {
+    const transactionId = uuidv4()
     
     this.commandBus.execute(new CreateTransactionCommand(
+      transactionId,
       body.accountExternalIdDebit,
       body.accountExternalIdCredit,
       body.tranferTypeId,
       body.value
     ))
 
-    return HttpStatus.CREATED;
+    return transactionId;
   }
 }
