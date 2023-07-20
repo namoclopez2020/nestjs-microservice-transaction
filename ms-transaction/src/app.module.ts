@@ -7,6 +7,7 @@ import { Transaction } from './Infrastructure/Repositories/Entities/transaction.
 import { CommandBus, CqrsModule } from '@nestjs/cqrs';
 import { CreateTransactionCommandHandler } from './Application/Commands/Handler/create-transaction.handler';
 import CreateTransactionService from './Domain/Services/create-transaction.service';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 export const CommandHandlers = [CreateTransactionCommandHandler];
 export const DomainServices = [CreateTransactionService]
@@ -29,6 +30,30 @@ export const DomainServices = [CreateTransactionService]
       imports: [ConfigModule]
     }),
     TypeOrmModule.forFeature([Transaction]),
+    ClientsModule.registerAsync([
+      {
+        name: 'TRANSACTION_EMITTER',
+        useFactory: async (configService: ConfigService) => ({
+          transport: Transport.KAFKA,
+          options: {
+            consumer: {
+              groupId: 'ms-transaction-consumer',
+            },
+            client: {
+              brokers: [configService.get('KAFKA_BROKERS')],
+              // ssl: true,
+              // sasl: {
+              //   mechanism: 'plain',
+              //   username: configService.get('KAFKA_USERNAME'),
+              //   password: configService.get('KAFKA_PASSWORD'),
+              // },
+            },
+          }
+        }),
+        inject: [ConfigService],
+        imports: [ConfigModule],
+      },
+    ]),
   ],
   controllers: [AppController],
   providers: [...Repositories, ...CommandHandlers, ...DomainServices],
