@@ -1,32 +1,28 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post } from '@nestjs/common';
 import { Inject } from '@nestjs/common';
-import { TransactionStatus } from 'src/Domain/Constants/transaction-status.constant';
-import { Transaction } from 'src/Domain/Entities/transaction.entity';
-import { ITransactionRepository } from 'src/Domain/Interfaces/transaction.repository.interface';
+import { CommandBus } from '@nestjs/cqrs';
+import { CreateTransactionCommand } from '../../Application/Commands/Impl/create-transaction.command';
+import { CreateTransactionDto } from '../../Application/Dto/Http/create-transaction.dto';
 import { v4 as uuidv4 } from 'uuid';
 
 @Controller()
 export class AppController {
-  constructor(
-    @Inject('ITransactionRepository')
-    private transactionRepository: ITransactionRepository,
-  ) {}
+  constructor(private commandBus: CommandBus) {}
 
-  @Get()
-  async getHello(): Promise<string> {
-    const transaction = new Transaction({
-      transactionExternalId: uuidv4(),
-      accountExternalIdDebit: uuidv4(),
-      accountExternalIdCredit: uuidv4(),
-      transferTypeId: 1,
-      value: 120,
-      status: TransactionStatus.PENDING, // Este valor es válido y no generará un error
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
+  @Post('/')
+  async createTransaction(
+    @Body() body: CreateTransactionDto
+  ): Promise<number> {
+    const transactionId = uuidv4()
     
-    await this.transactionRepository.save(transaction)
+    this.commandBus.execute(new CreateTransactionCommand(
+      transactionId,
+      body.accountExternalIdDebit,
+      body.accountExternalIdCredit,
+      body.tranferTypeId,
+      body.value
+    ))
 
-    return 'listo'
+    return transactionId;
   }
 }
