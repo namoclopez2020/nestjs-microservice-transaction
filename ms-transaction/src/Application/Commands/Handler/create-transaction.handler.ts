@@ -27,8 +27,8 @@ export class CreateTransactionCommandHandler implements ICommandHandler<CreateTr
 
         await this.CreateTransactionService.execute(transaction)
 
-        this.kafka.emit('transaction.created', {
-            'transaction': transaction
-        })
+        this.kafka.emit('transaction.created', {transaction})
+
+        console.log('emitted')
     }
 }
