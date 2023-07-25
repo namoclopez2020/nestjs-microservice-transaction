@@ -30,11 +30,4 @@ export class AppController {
 
     return transactionId;
   }
-
-  // @MessagePattern('transaction.created')
-  // public messageCreate(@Payload() payload: any){
-  //   console.log(payload)
-  //   console.log('leeerrr')
-  //   // Logger.log(payload, AppController.name)
-  // }
 }

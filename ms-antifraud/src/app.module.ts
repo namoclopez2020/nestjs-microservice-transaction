@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AppController } from './Infrastructure/Controllers/app.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { CheckTransactionUseCase } from './Application/UseCases/check-transaction.use-case';
+
+const useCases = [CheckTransactionUseCase]
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -24,6 +26,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     ]),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [...useCases],
 })
 export class AppModule {}
