@@ -30,4 +30,9 @@ export class AppController {
 
     return transactionId;
   }
+
+  @MessagePattern('transaction.update.status')
+  public transactionCreated(@Payload() payload: any){
+    console.log('update transaction payload->', payload)
+  }
 }

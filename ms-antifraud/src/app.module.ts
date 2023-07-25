@@ -10,7 +10,7 @@ const useCases = [CheckTransactionUseCase]
     ConfigModule.forRoot(),
     ClientsModule.registerAsync([
       {
-        name: 'TRANSACTION_EMITTER',
+        name: 'TRANSACTION_ANTIFRAUD_EMITTER',
         useFactory: async (configService: ConfigService) => ({
           transport: Transport.KAFKA,
           options: {
@@ -28,4 +28,5 @@ const useCases = [CheckTransactionUseCase]
   controllers: [AppController],
   providers: [...useCases],
 })
+
 export class AppModule {}

@@ -9,10 +9,8 @@ export class AppController {
 
   @MessagePattern('transaction.created')
   public transactionCreated(@Payload() payload: TransactionCreatedDto){
-    console.log('test')
     Logger.log(payload, AppController.name)
-    let test = this.checkTransactionUseCase.execute(payload)
-
-    console.log('print->', test)
+    
+    this.checkTransactionUseCase.execute(payload)
   }
 }
