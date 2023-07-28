@@ -6,11 +6,20 @@ import Repositories from './Infrastructure/Repositories';
 import { Transaction } from './Infrastructure/Repositories/Entities/transaction.entity';
 import { CommandBus, CqrsModule } from '@nestjs/cqrs';
 import { CreateTransactionCommandHandler } from './Application/Commands/Handler/create-transaction.handler';
-import CreateTransactionService from './Domain/Services/create-transaction.service';
+import CreateTransactionUseCase from './Application/UseCases/create-transaction.use-case';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { UpdateTransactionStatusCommandHandler } from './Application/Commands/Handler/update-transaction-status.handler';
+import UpdateTransactionStatusUseCase from './Application/UseCases/update-transaction-status.use-case';
 
-export const CommandHandlers = [CreateTransactionCommandHandler];
-export const DomainServices = [CreateTransactionService]
+export const CommandHandlers = [
+  CreateTransactionCommandHandler,
+  UpdateTransactionStatusCommandHandler
+];
+
+export const UseCases = [
+  CreateTransactionUseCase,
+  UpdateTransactionStatusUseCase
+]
 @Module({
   imports: [
     CqrsModule,
@@ -58,6 +67,6 @@ export const DomainServices = [CreateTransactionService]
     ]),
   ],
   controllers: [AppController],
-  providers: [...Repositories, ...CommandHandlers, ...DomainServices],
+  providers: [...Repositories, ...CommandHandlers, ...UseCases],
 })
 export class AppModule {}
