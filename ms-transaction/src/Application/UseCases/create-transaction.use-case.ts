@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { UUID } from 'crypto';
-import { ITransactionRepository } from '../Interfaces/transaction.repository.interface';
-import { TransactionStatus } from '../Constants/transaction-status.constant';
-import { CreateTransactionDto } from '../../Application/Dto/create-transaction.dto';
-import { Transaction } from '../Entities/transaction.entity';
+import { ITransactionRepository } from '../../Domain/Interfaces/transaction.repository.interface';
+import { TransactionStatus } from '../../Domain/Constants/transaction-status.constant';
+import { CreateTransactionDto } from '../Dto/create-transaction.dto';
+import { Transaction } from '../../Domain/Entities/transaction.entity';
 
 @Injectable()
-export default class CreateTransactionService {
+export default class CreateTransactionUseCase {
   constructor(
     @Inject('ITransactionRepository')
     private transactionRepository: ITransactionRepository,

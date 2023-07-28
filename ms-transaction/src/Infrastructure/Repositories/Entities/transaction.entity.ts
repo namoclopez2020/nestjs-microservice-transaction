@@ -21,7 +21,7 @@ export class Transaction {
     type: 'varchar',
     default: TransactionStatus.PENDING
   })
-  status: string;
+  status: TransactionStatus;
 
   @Column({ type: 'decimal', precision: 17, scale: 2 })
   value: number;
