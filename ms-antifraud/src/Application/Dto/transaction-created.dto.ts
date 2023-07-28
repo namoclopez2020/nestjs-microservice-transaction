@@ -11,6 +11,10 @@ import { UUID } from 'crypto';
 export class TransactionCreatedDto {
     @IsString()
     @IsUUID()
+    readonly transactionExternalId: UUID;
+
+    @IsString()
+    @IsUUID()
     readonly accountExternalIdDebit: UUID;
   
     @IsString()

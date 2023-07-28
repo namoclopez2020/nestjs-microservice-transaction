@@ -18,7 +18,7 @@ export class CheckTransactionUseCase {
         
         this.kafka.emit('transaction.update.status', JSON.stringify(
             {
-                'transactionExternalId': transaction.accountExternalIdCredit,
+                'transactionExternalId': transaction.transactionExternalId,
                 'status': status
             }
         ))

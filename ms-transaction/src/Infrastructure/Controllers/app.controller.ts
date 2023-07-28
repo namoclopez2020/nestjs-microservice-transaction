@@ -6,6 +6,7 @@ import { CreateTransactionDto } from '../../Application/Dto/Http/create-transact
 import { v4 as uuidv4 } from 'uuid';
 import { ClientProxy, MessagePattern, Payload } from '@nestjs/microservices';
 import { UpdateTransactionStatusDto } from 'src/Application/Dto/TCP/update-transaction-status.dto';
+import { UpdateTransactionStatusCommand } from 'src/Application/Commands/Impl/update-transaction-status.command';
 
 @Controller()
 export class AppController {
@@ -34,6 +35,9 @@ export class AppController {
 
   @MessagePattern('transaction.update.status')
   public updateTransactionStatus(@Payload() payload: UpdateTransactionStatusDto){
-    console.log('update transaction payload->', payload)
+    this.commandBus.execute(new UpdateTransactionStatusCommand(
+      payload.transactionExternalId,
+      payload.status
+    ))
   }
 }
